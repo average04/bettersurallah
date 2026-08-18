@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+:root {
+  --base: #ffffff;
+  --mist: #eef3fb;
+  --ink: #0c1d3d;
+  --ink-soft: #4a5b7d;
+  --blue: #0a3fa8;
+  --blue-deep: #072a73;
+  --sky: #3f7de0;
+}
+
+@theme inline {
+  --color-base: var(--base);
+  --color-mist: var(--mist);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-blue: var(--blue);
+  --color-blue-deep: var(--blue-deep);
+  --color-sky: var(--sky);
+  --font-sans: var(--font-public-sans);
+  --font-display: var(--font-schibsted);
+}
+
+body {
+  background: var(--base);
+  color: var(--ink);
+  font-family: var(--font-public-sans), "Public Sans", sans-serif;
+}
+
+.dotgrid {
+  background-image: radial-gradient(circle, var(--blue) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes stitch-fill {
+  0%,
+  15% {
+    background-color: transparent;
+  }
+  45%,
+  65% {
+    background-color: var(--blue);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.stitch {
+  animation: stitch-fill 2.8s ease-in-out infinite;
+}
+
+@keyframes beacon {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+.beacon {
+  animation: beacon 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .beacon {
+    animation: none;
+  }
+  .stitch {
+    animation: none;
+    background-color: var(--blue);
+  }
+}
