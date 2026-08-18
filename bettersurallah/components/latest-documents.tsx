@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { EmptyState, ErrorState, SkeletonRows } from "@/components/data-states";
 import { CATEGORY_LABELS } from "@/lib/format";
 import { fetchLatestDocuments } from "@/lib/queries";
@@ -13,21 +13,21 @@ type State =
 
 export function LatestDocuments() {
   const [state, setState] = useState<State>({ status: "loading" });
-
-  const load = useCallback(() => {
-    setState({ status: "loading" });
-    fetchLatestDocuments(5)
-      .then((docs) => setState({ status: "ready", docs }))
-      .catch((e: Error) => setState({ status: "error", message: e.message }));
-  }, []);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
-    load();
-  }, [load]);
+    let cancelled = false;
+    fetchLatestDocuments(5)
+      .then((docs) => { if (!cancelled) setState({ status: "ready", docs }); })
+      .catch((e: Error) => { if (!cancelled) setState({ status: "error", message: e.message }); });
+    return () => { cancelled = true; };
+  }, [attempt]);
+
+  const retry = () => { setState({ status: "loading" }); setAttempt((a) => a + 1); };
 
   if (state.status === "loading") return <SkeletonRows count={5} />;
   if (state.status === "error")
-    return <ErrorState message="Couldn't load the latest documents." onRetry={load} />;
+    return <ErrorState message="Couldn't load the latest documents." onRetry={retry} />;
   if (state.docs.length === 0)
     return <EmptyState message="No documents published yet." />;
 
