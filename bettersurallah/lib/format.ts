@@ -1,4 +1,4 @@
-import type { DocumentCategory, TransparencyDocument } from "./types";
+import type { DocumentCategory, GovernmentProject, TransparencyDocument } from "./types";
 
 export const CATEGORY_LABELS: Record<DocumentCategory, string> = {
   budget: "Budget",
@@ -41,4 +41,19 @@ export function documentYears(docs: TransparencyDocument[]): number[] {
     .map((d) => d.year)
     .filter((y): y is number => y !== null);
   return [...new Set(years)].sort((a, b) => b - a);
+}
+
+export function sortProjects(
+  projects: GovernmentProject[],
+  key: "year" | "amount",
+  dir: "asc" | "desc",
+): GovernmentProject[] {
+  return [...projects].sort((a, b) => {
+    const av = a[key];
+    const bv = b[key];
+    if (av === null && bv === null) return 0;
+    if (av === null) return 1;
+    if (bv === null) return -1;
+    return dir === "asc" ? av - bv : bv - av;
+  });
 }

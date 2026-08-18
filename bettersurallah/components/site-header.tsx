@@ -12,6 +12,8 @@ const LINKS = [
   { href: "/about", label: "About" },
 ];
 
+const normalize = (p: string) => (p !== "/" && p.endsWith("/") ? p.slice(0, -1) : p);
+
 export function SiteHeader() {
   const pathname = usePathname();
   return (
@@ -23,11 +25,12 @@ export function SiteHeader() {
         </Link>
         <nav aria-label="Main" className="flex flex-wrap items-center gap-1">
           {LINKS.map(({ href, label }) => {
-            const active = pathname === href;
+            const active = normalize(pathname) === href;
             return (
               <Link
                 key={href}
                 href={href}
+                aria-current={active ? "page" : undefined}
                 className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors ${
                   active ? "bg-blue text-white" : "text-ink-soft hover:bg-mist hover:text-blue"
                 }`}

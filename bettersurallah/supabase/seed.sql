@@ -3,7 +3,7 @@ insert into public.projects (title, barangay, amount, funding_source, year, stat
 ('Upgrading of NACI Water System', 'Naci', 500000.00, 'BUB', 2015, 'completed', 'Bottom-Up Budgeting (BUB) - Water Supply'),
 ('Construction of Potable Water System', 'Moloy', 1350000.00, 'BUB', 2015, 'completed', 'Bottom-Up Budgeting (BUB) - Water Supply'),
 ('Construction of Potable Water System', 'Talahik', 1350000.00, 'BUB', 2015, 'completed', 'Bottom-Up Budgeting (BUB) - Water Supply'),
-('Construction of Potable Water System Level II', 'Tubi-Ala', 2000000.00, 'LGSF', 2014, 'completed', 'LGSF - Sagana at Ligtas na Tubig para sa Lahat (SALINTUBIG)'),
+('Construction of Potable Water System Level II', 'Tubi-Alah', 2000000.00, 'LGSF', 2014, 'completed', 'LGSF - Sagana at Ligtas na Tubig para sa Lahat (SALINTUBIG)'),
 ('Road Project in Purok Matinong-San Jose Road', 'Dajay', 1880000.00, 'BUB', 2014, 'completed', 'Bottom-Up Budgeting (BUB) - Local Access Road'),
 ('Concreting of Colongulo-Buenavista Road', 'Colongulo', 1300000.00, 'LGSF', 2016, 'completed', 'LGSF - Roads & Bridges'),
 ('Construction of Rosas-Moloy Road', 'Moloy', 2750000.00, 'LGSF', 2016, 'completed', 'LGSF - Roads & Bridges'),
@@ -19,7 +19,7 @@ insert into public.projects (title, barangay, amount, funding_source, year, stat
 ('Local Road Access in Malvar Street', 'Libertad', 5887400.00, 'AM', 2019, 'completed', 'AM - Local Access'),
 ('Upgrading of PWS Level II to Level III', 'Moloy', 3500000.00, 'LGSF', 2020, 'ongoing', 'LGSF - SALINTUBIG'),
 ('Construction of Potable Water System Level II in Purok 2', 'Duengas', 5425820.00, 'LGSF', 2020, 'ongoing', 'LGSF - SALINTUBIG'),
-('Construction of Potable Water System Level II at Lubol', 'Sepaka', 2898302.00, 'LGSF', 2020, 'ongoing', 'LGSF - SALINTUBIG'),
+('Construction of Potable Water System Level II at Lubol', 'Upper Sepaka', 2898302.00, 'LGSF', 2020, 'ongoing', 'LGSF - SALINTUBIG'),
 ('Upgrading of Pardo de Tavera Street', 'Libertad', 11897000.00, 'AM', 2020, 'ongoing', 'AM - Local Access');
 
 insert into public.documents (title, category, year, source_url, description) values

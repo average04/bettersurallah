@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { EmptyState, ErrorState, SkeletonRows } from "@/components/data-states";
 import { CATEGORY_LABELS, documentYears, groupByCategory } from "@/lib/format";
 import { fetchDocuments } from "@/lib/queries";
-import type { TransparencyDocument } from "@/lib/types";
+import type { DocumentCategory, TransparencyDocument } from "@/lib/types";
 
 type State =
   | { status: "loading" }
@@ -14,6 +14,7 @@ type State =
 export function TransparencyList() {
   const [state, setState] = useState<State>({ status: "loading" });
   const [year, setYear] = useState<number | "all">("all");
+  const [category, setCategory] = useState<DocumentCategory | "all">("all");
   const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
@@ -40,9 +41,16 @@ export function TransparencyList() {
     [state],
   );
   const years = useMemo(() => documentYears(docs), [docs]);
+  const categories = useMemo(
+    () => groupByCategory(docs).map(([c]) => c),
+    [docs],
+  );
   const visible = useMemo(
-    () => (year === "all" ? docs : docs.filter((d) => d.year === year)),
-    [docs, year],
+    () =>
+      docs
+        .filter((d) => year === "all" || d.year === year)
+        .filter((d) => category === "all" || d.category === category),
+    [docs, year, category],
   );
   const groups = useMemo(() => groupByCategory(visible), [visible]);
 
@@ -59,12 +67,24 @@ export function TransparencyList() {
         ))}
       </div>
 
+      <div className="flex flex-wrap items-center gap-2">
+        <FilterChip label="All categories" active={category === "all"} onClick={() => setCategory("all")} />
+        {categories.map((c) => (
+          <FilterChip
+            key={c}
+            label={CATEGORY_LABELS[c]}
+            active={category === c}
+            onClick={() => setCategory(c)}
+          />
+        ))}
+      </div>
+
       {groups.length === 0 && <EmptyState message="No documents for this filter yet." />}
 
-      {groups.map(([category, list]) => (
-        <section key={category}>
+      {groups.map(([groupCategory, list]) => (
+        <section key={groupCategory}>
           <h2 className="flex items-baseline gap-3 font-display text-2xl font-bold text-ink">
-            {CATEGORY_LABELS[category]}
+            {CATEGORY_LABELS[groupCategory]}
             <span className="text-sm font-semibold text-ink-soft">{list.length}</span>
           </h2>
           <ul className="mt-4 flex flex-col divide-y divide-ink/10 rounded-xl border border-ink/10 bg-base px-5">

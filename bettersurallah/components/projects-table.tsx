@@ -2,9 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { EmptyState, ErrorState, SkeletonRows } from "@/components/data-states";
-import { formatPeso } from "@/lib/format";
+import { formatPeso, sortProjects } from "@/lib/format";
 import { fetchProjects } from "@/lib/queries";
-import type { GovernmentProject, ProjectStatus } from "@/lib/types";
+import type { FundingSource, GovernmentProject, ProjectStatus } from "@/lib/types";
 
 type State =
   | { status: "loading" }
@@ -25,9 +25,23 @@ const STATUS_STYLES: Record<ProjectStatus, string> = {
   unknown: "border border-ink/10 text-ink-soft",
 };
 
+const FUND_LABELS: Record<FundingSource, string> = {
+  BUB: "BUB",
+  LGSF: "LGSF",
+  ADM: "ADM",
+  AM: "AM",
+  local: "Local funds",
+  national: "National funds",
+  other: "Other",
+};
+
+type SortKey = "year" | "amount";
+type SortDir = "asc" | "desc";
+
 export function ProjectsTable() {
   const [state, setState] = useState<State>({ status: "loading" });
   const [filter, setFilter] = useState<ProjectStatus | "all">("all");
+  const [sort, setSort] = useState<{ key: SortKey; dir: SortDir } | null>(null);
   const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
@@ -40,6 +54,13 @@ export function ProjectsTable() {
 
   const retry = () => { setState({ status: "loading" }); setAttempt((a) => a + 1); };
 
+  const toggleSort = (key: SortKey) => {
+    setSort((prev) => {
+      if (!prev || prev.key !== key) return { key, dir: "asc" };
+      return { key, dir: prev.dir === "asc" ? "desc" : "asc" };
+    });
+  };
+
   const projects = useMemo(
     () => (state.status === "ready" ? state.projects : []),
     [state],
@@ -47,6 +68,10 @@ export function ProjectsTable() {
   const visible = useMemo(
     () => (filter === "all" ? projects : projects.filter((p) => p.status === filter)),
     [projects, filter],
+  );
+  const sorted = useMemo(
+    () => (sort ? sortProjects(visible, sort.key, sort.dir) : visible),
+    [visible, sort],
   );
   const total = useMemo(
     () => visible.reduce((sum, p) => sum + (p.amount ?? 0), 0),
@@ -87,14 +112,14 @@ export function ProjectsTable() {
               <tr className="border-b border-ink/10 bg-mist/60 text-xs font-semibold uppercase tracking-[0.12em] text-ink-soft">
                 <th className="px-4 py-3">Project</th>
                 <th className="px-4 py-3">Barangay</th>
-                <th className="px-4 py-3">Year</th>
+                <SortableHeader label="Year" sortKey="year" sort={sort} onSort={toggleSort} />
                 <th className="px-4 py-3">Fund</th>
-                <th className="px-4 py-3 text-right">Amount</th>
+                <SortableHeader label="Amount" sortKey="amount" sort={sort} onSort={toggleSort} align="right" />
                 <th className="px-4 py-3">Status</th>
               </tr>
             </thead>
             <tbody>
-              {visible.map((p) => (
+              {sorted.map((p) => (
                 <tr key={p.id} className="border-b border-ink/5 last:border-0">
                   <td className="px-4 py-3">
                     <p className="font-semibold text-ink">{p.title}</p>
@@ -102,7 +127,7 @@ export function ProjectsTable() {
                   </td>
                   <td className="px-4 py-3 text-ink-soft">{p.barangay ?? "—"}</td>
                   <td className="px-4 py-3 text-ink-soft">{p.year ?? "—"}</td>
-                  <td className="px-4 py-3 text-ink-soft">{p.funding_source ?? "—"}</td>
+                  <td className="px-4 py-3 text-ink-soft">{p.funding_source ? FUND_LABELS[p.funding_source] : "—"}</td>
                   <td className="px-4 py-3 text-right font-semibold text-ink">{formatPeso(p.amount)}</td>
                   <td className="px-4 py-3">
                     <span className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${STATUS_STYLES[p.status]}`}>
@@ -125,5 +150,36 @@ export function ProjectsTable() {
         </div>
       )}
     </div>
+  );
+}
+
+function SortableHeader({
+  label,
+  sortKey,
+  sort,
+  onSort,
+  align = "left",
+}: {
+  label: string;
+  sortKey: SortKey;
+  sort: { key: SortKey; dir: SortDir } | null;
+  onSort: (key: SortKey) => void;
+  align?: "left" | "right";
+}) {
+  const active = sort?.key === sortKey;
+  const ariaSort = active ? (sort.dir === "asc" ? "ascending" : "descending") : "none";
+  return (
+    <th className={`px-4 py-3 ${align === "right" ? "text-right" : ""}`} aria-sort={ariaSort}>
+      <button
+        type="button"
+        onClick={() => onSort(sortKey)}
+        className={`inline-flex items-center gap-1 transition-colors hover:text-blue ${
+          align === "right" ? "flex-row-reverse" : ""
+        }`}
+      >
+        {label}
+        {active && <span aria-hidden="true">{sort.dir === "asc" ? "▲" : "▼"}</span>}
+      </button>
+    </th>
   );
 }

@@ -21,4 +21,8 @@ describe("searchOfficials", () => {
   it("returns empty for no match", () => {
     expect(searchOfficials(sample, "zzz")).toHaveLength(0);
   });
+  it("matches the group label", () => {
+    expect(searchOfficials(sample, "captain")[0].name).toBe("Haddy S. Glamado");
+    expect(searchOfficials(sample, "barangay captains")[0].name).toBe("Haddy S. Glamado");
+  });
 });

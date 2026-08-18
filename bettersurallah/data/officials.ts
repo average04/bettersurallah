@@ -22,7 +22,7 @@ export const GROUP_LABELS: Record<OfficialGroup, string> = {
 
 export const OFFICIALS: Official[] = [
   { name: 'Pedro "Cano" M. Matinong Jr.', position: "Municipal Mayor", group: "executive", phone: "2383-578" },
-  { name: "Hon. Harold B. Eslabon", position: "Vice Mayor", group: "executive" },
+  { name: "Hon. Harold B. Eslabon", position: "Vice Mayor", group: "executive", phone: "2383-568" },
 
   { name: "Hon. Beltran L. Armada", position: "SB Member", group: "sangguniang_bayan", detail: "Chair: Finance, Budget & Appropriation; Rules; Infrastructure, Housing & Land Use", unverified: true },
   { name: "Hon. Ian Cristopher B. Escleto", position: "SB Member", group: "sangguniang_bayan", detail: "Chair: Women, Children & Family; Trade, Investment & Livelihood", unverified: true },
