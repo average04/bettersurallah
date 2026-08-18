@@ -3,11 +3,11 @@
 :root {
   --base: #ffffff;
   --mist: #eef3fb;
-  --ink: #0c1d3d;
-  --ink-soft: #4a5b7d;
-  --blue: #0a3fa8;
-  --blue-deep: #072a73;
-  --sky: #3f7de0;
+  --ink: #0e0f12;
+  --ink-soft: #575d6b;
+  --blue: #0035ad;
+  --blue-deep: #002478;
+  --sky: #3d66d9;
 }
 
 @theme inline {

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const STITCH_DELAYS = [0, 0.4, 0.8, 1.2, 1.6];
 
 function DiamondRings({ className }: { className?: string }) {
@@ -28,16 +30,14 @@ export default function Home() {
       <div className="relative z-10 h-1.5 w-full bg-blue" />
 
       <header className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 pt-8 sm:px-10">
-        <p className="reveal flex items-center gap-2.5 font-display text-xl text-ink">
-          <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-            <path d="M12 2 L22 12 L12 22 L2 12 Z" fill="var(--blue)" />
-            <path d="M12 7.5 L16.5 12 L12 16.5 L7.5 12 Z" fill="var(--base)" />
-          </svg>
-          <span>
-            <span className="font-normal">Better</span>
-            <span className="font-bold">Surallah</span>
-          </span>
-        </p>
+        <Image
+          src="/logo.png"
+          alt="BetterSurallah.org"
+          width={164}
+          height={50}
+          priority
+          className="reveal h-11 w-auto sm:h-12"
+        />
         <span
           className="reveal hidden items-center gap-2 rounded-full border border-blue/25 bg-mist/60 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue sm:inline-flex"
           style={{ animationDelay: "0.1s" }}
