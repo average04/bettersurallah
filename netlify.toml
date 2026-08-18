@@ -1,0 +1,4 @@
+[build]
+  base = "bettersurallah"
+  command = "npm run build"
+  publish = "out"
