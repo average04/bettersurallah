@@ -16,6 +16,9 @@ const publicSans = Public_Sans({
 });
 
 export const metadata: Metadata = {
+  // Netlify sets URL to the site's primary address during builds; link previews need absolute URLs.
+  metadataBase: new URL(process.env.URL ?? "http://localhost:3000"),
+  twitter: { card: "summary_large_image" },
   title: {
     default: "BetterSurallah — Transparency for Surallah, South Cotabato",
     template: "%s · BetterSurallah",

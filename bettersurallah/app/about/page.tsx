@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About",
@@ -26,9 +27,13 @@ export default function AboutPage() {
           transparency documents, government projects, and the people in
           office — and makes it easy to find, read, and verify.
         </p>
-        <div aria-hidden="true" className="flex h-56 items-center justify-center rounded-xl bg-mist text-sm font-semibold text-ink-soft">
-          Photo coming soon
-        </div>
+        <Image
+          src="/images/about-service-counter.webp"
+          alt="Illustration of residents holding checklists while waiting their turn at a municipal service counter"
+          width={1344}
+          height={576}
+          className="h-auto w-full rounded-xl bg-mist"
+        />
       </div>
 
       <h2 className="mt-12 font-display text-2xl font-bold text-ink">Where the data comes from</h2>
