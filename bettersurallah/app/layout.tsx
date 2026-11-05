@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s · BetterSurallah",
   },
   description:
-    "An independent, citizen-built window into how Surallah works — transparency documents, officials, and government projects in one place.",
+    "A citizen-built window into how Surallah works — transparency documents, officials, and government projects in one place.",
 };
 
 export const viewport: Viewport = {

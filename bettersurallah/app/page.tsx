@@ -44,7 +44,7 @@ export default function Home() {
           See how Surallah <span className="text-blue">works</span>.
         </h1>
         <p className="reveal mt-6 max-w-xl text-lg leading-8 text-ink-soft" style={{ animationDelay: "0.2s" }}>
-          An independent, citizen-built window into our municipality — public
+          A citizen-built window into our municipality — public
           documents, government projects, and the people behind them, gathered
           in one place and made easy to read.
         </p>

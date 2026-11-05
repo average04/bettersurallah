@@ -21,16 +21,10 @@ export default function AboutPage() {
 
       <div className="mt-8 flex flex-col gap-6 text-lg leading-8 text-ink-soft">
         <p>
-          BetterSurallah is an independent, citizen-built website that gathers
-          public information about the Municipality of Surallah, South
-          Cotabato — transparency documents, government projects, and the
-          people in office — and makes it easy to find, read, and verify.
-        </p>
-        <p className="rounded-xl border border-blue/20 bg-mist/50 p-5 text-base leading-7">
-          <strong className="text-ink">Independence note:</strong> this site is
-          not affiliated with, endorsed by, or operated by the Municipal
-          Government of Surallah or any of its offices. Every document links
-          back to its official source so you can check it yourself.
+          BetterSurallah is a citizen-built website that gathers public
+          information about the Municipality of Surallah, South Cotabato —
+          transparency documents, government projects, and the people in
+          office — and makes it easy to find, read, and verify.
         </p>
         <div aria-hidden="true" className="flex h-56 items-center justify-center rounded-xl bg-mist text-sm font-semibold text-ink-soft">
           Photo coming soon
