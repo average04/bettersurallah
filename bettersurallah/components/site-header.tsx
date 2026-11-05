@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 const LINKS = [
   { href: "/", label: "Home" },
+  { href: "/services", label: "Services" },
   { href: "/transparency", label: "Transparency" },
   { href: "/projects", label: "Projects" },
   { href: "/officials", label: "Officials" },
@@ -17,7 +18,7 @@ const normalize = (p: string) => (p !== "/" && p.endsWith("/") ? p.slice(0, -1) 
 export function SiteHeader() {
   const pathname = usePathname();
   return (
-    <header className="relative z-10 border-b border-ink/10 bg-base">
+    <header className="relative z-10 border-b border-ink/10 bg-base print:hidden">
       <div className="h-1.5 w-full bg-blue" />
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 sm:px-10">
         <Link href="/">
@@ -25,7 +26,8 @@ export function SiteHeader() {
         </Link>
         <nav aria-label="Main" className="flex flex-wrap items-center gap-1">
           {LINKS.map(({ href, label }) => {
-            const active = normalize(pathname) === href;
+            const path = normalize(pathname);
+            const active = href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
             return (
               <Link
                 key={href}

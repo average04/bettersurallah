@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { TransparencyList } from "@/components/transparency-list";
 
 export const metadata: Metadata = {
@@ -15,6 +16,13 @@ export default function TransparencyPage() {
       <p className="mt-4 max-w-2xl text-lg leading-8 text-ink-soft">
         Official documents of the Municipality of Surallah, collected in one
         place. Every entry links to its source so you can verify it yourself.
+      </p>
+      <p className="mt-3 max-w-2xl text-sm leading-6 text-ink-soft">
+        Looking for requirements and fees? The 2026 Citizen&apos;s Charter is also
+        available as{" "}
+        <Link href="/services" className="font-semibold text-blue hover:text-blue-deep">
+          searchable government services →
+        </Link>
       </p>
       <div className="mt-10">
         <TransparencyList />

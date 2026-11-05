@@ -12,7 +12,8 @@ An independent, citizen-built transparency website for the **Municipality of Sur
 
 | Page | What it shows |
 |---|---|
-| **Home** | Municipal quick stats and the latest published documents |
+| **Home** | Municipal quick stats, a government-services search, and the latest published documents |
+| **/services** | 94 municipal services from the 2026 Citizen's Charter, searchable: what to bring, step-by-step process, fees, processing time, office contacts, each linked to its PDF page |
 | **/transparency** | Public documents (citizen's charters, and eventually budgets, COA audits, disclosures) grouped by category, filterable by category and year |
 | **/projects** | Government projects with amounts, funding sources, year, and status — sortable and filterable |
 | **/officials** | Searchable directory: mayor, vice mayor, Sangguniang Bayan, department heads (with office phone numbers), and all 17 barangay captains |
@@ -22,7 +23,7 @@ An independent, citizen-built transparency website for the **Municipality of Sur
 
 - **Next.js 16** (App Router, TypeScript, Tailwind v4) built as a **fully static export** — no servers.
 - **Supabase (Postgres)** stores the content that changes often (`documents`, `projects`). The browser reads it live with the publishable key; **Row-Level Security allows `SELECT` only**, so the database is read-only to the public. Content edits happen in the Supabase dashboard and appear on the site on refresh — no rebuild needed.
-- Rarely-changing data (officials, municipal stats) lives as typed files in [`bettersurallah/data/`](bettersurallah/data/) and is edited through git.
+- Rarely-changing data (officials, municipal stats, Citizen's Charter services) lives as typed files in [`bettersurallah/data/`](bettersurallah/data/) and is edited through git.
 - **Netlify** deploys automatically from `main` (settings in [`netlify.toml`](netlify.toml): base `bettersurallah`, publish `out`).
 
 ## Repository layout
@@ -31,8 +32,9 @@ An independent, citizen-built transparency website for the **Municipality of Sur
 bettersurallah/        The Next.js app
   app/                 Pages (App Router)
   components/          UI components
-  data/                Officials + stats (repo-managed content)
+  data/                Officials, stats, charter services (repo-managed content)
   lib/                 Supabase client, queries, formatting, search
+  scripts/charter/     One-off Citizen's Charter PDF extraction (see its README)
   supabase/            schema.sql (tables + RLS) and seed.sql
 docs/superpowers/      Design spec and implementation plan
 netlify.toml           Netlify build settings + public env vars

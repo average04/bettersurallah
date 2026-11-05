@@ -1,6 +1,10 @@
+import Form from "next/form";
 import Link from "next/link";
 import { LatestDocuments } from "@/components/latest-documents";
+import { POPULAR_SLUGS, SERVICE_BY_SLUG, SERVICES } from "@/data/services";
 import { MUNICIPAL_STATS } from "@/data/stats";
+
+const POPULAR = POPULAR_SLUGS.slice(0, 5).map((slug) => ({ slug, name: SERVICE_BY_SLUG.get(slug)!.name }));
 
 const SECTIONS = [
   {
@@ -57,6 +61,45 @@ export default function Home() {
             </div>
           ))}
         </dl>
+      </section>
+
+      <section className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-12 sm:px-10">
+        <div className="rounded-2xl bg-blue p-6 text-white sm:p-8">
+          <h2 className="font-display text-2xl font-bold">Need something from the municipal hall?</h2>
+          <p className="mt-1 max-w-2xl text-sm leading-6 text-white/80">
+            What to bring, how much it costs, and how long it takes for{" "}
+            {SERVICES.length} services, from the official Citizen&apos;s Charter.
+          </p>
+          <Form action="/services" className="mt-5 flex flex-col gap-3 sm:flex-row">
+            <label className="flex-1">
+              <span className="sr-only">Search services</span>
+              <input
+                name="q"
+                type="search"
+                autoComplete="off"
+                placeholder="Try “cedula”, “business permit”, “birth certificate”"
+                className="w-full rounded-full bg-white px-5 py-3.5 text-base text-ink outline-none placeholder:text-ink-soft/60 focus:ring-4 focus:ring-white/30"
+              />
+            </label>
+            <button
+              type="submit"
+              className="rounded-full border border-white/40 px-7 py-3.5 font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              Search services
+            </button>
+          </Form>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {POPULAR.map((p) => (
+              <Link
+                key={p.slug}
+                href={`/services/${p.slug}`}
+                className="rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-white/20"
+              >
+                {p.name}
+              </Link>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section className="relative z-10 mx-auto grid w-full max-w-6xl gap-4 px-6 pb-16 sm:grid-cols-3 sm:px-10">
